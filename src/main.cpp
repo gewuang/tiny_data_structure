@@ -1,10 +1,10 @@
 #include <iostream>
-
-using namespace std;
+#include "hello.h" 
 
 int main(void)
 {
-    cout << "hello" << endl;
+    char str[10] = " world";
+    hello(str);
 
     return 0;
 }
