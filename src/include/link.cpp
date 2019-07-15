@@ -29,7 +29,7 @@ Node<DATA>::Node()
  * @param next
  */
 template <class DATA>
-Node<DATA>::Node(DATA data, Node<DATA>* next = NULL)
+Node<DATA>::Node(DATA data, Node<DATA>* next)
 {
     this->data = data;
     this->next = next;
@@ -46,10 +46,10 @@ Node<DATA>::Node(DATA data, Node<DATA>* next = NULL)
 template <class DATA>
 Node<DATA>* SimpleLink<DATA>::GetElemPtr(int position) const
 {
-    Node<DATA> tmpPtr = head;
+    Node<DATA>* tmpPtr = head;
     int conPos = 0;
 
-    while (tmpPtr != NULL && conPos < position)
+    while (tmpPtr->next != NULL && conPos < position)
     {
         tmpPtr = tmpPtr->next;
         conPos++;
@@ -133,7 +133,13 @@ bool SimpleLink<DATA>::IsEmpty() const
 template <class DATA>
 void SimpleLink<DATA>::Clear()
 {
-    // TODO 
+    unsigned int len = Length();
+
+    while (len > 0)
+    {
+        DeleteLink(1);
+        len = len - 1;
+    }
 }
 
 /**
@@ -142,7 +148,7 @@ void SimpleLink<DATA>::Clear()
  * @tparam DATA
  */
 template <class DATA>
-void PrintLink()
+void SimpleLink<DATA>::PrintLink()
 {
     Node<DATA>* tmpPtr = head;
 
@@ -235,15 +241,96 @@ bool SimpleLink<DATA>::SetELem(int position, const DATA data)
     return ret;
 }
 
+/**
+ * @brief: 获得数据对应的位置
+ *
+ * @tparam DATA
+ * @param data
+ *
+ * @return 找到返回位置，错误返回-1
+ */
 template <class DATA>
-DATA GetPosition(const DATA data);
-bool DeleteLink(int position);
+int SimpleLink<DATA>::GetPosition(const DATA data)
 {
-    
+    int position = 0;
+    int ret = -1;
+    Node<DATA>* tmpPtr = head;
+
+    while (tmpPtr->next != NULL)
+    {
+        tmpPtr = tmpPtr->next;
+        position++;
+        if(data == tmpPtr->data)
+        {
+            ret = position;
+            break;
+        }
+    }
+
+    return ret; 
 }
-bool InsertLink(int position, const DATA data);
-bool ReverseLink();
-SimpleLink<DATA>&operator=(const SimpleLink<DATA> &copy);   // 赋值运算符重载 
+
+/**
+ * @brief: 删除对应位置的内容
+ *
+ * @tparam DATA
+ * @param position
+ *
+ * @return true/false
+ */
+template <class DATA>
+bool SimpleLink<DATA>::DeleteLink(int position)
+{
+    bool ret = false;
+    unsigned int len = Length();
+
+    Node<DATA>* pre = GetElemPtr(position-1);
+    Node<DATA>* del = pre->next; 
+
+    if(position < len && position > 0)
+    {
+        pre->next = del->next;
+        delete del;
+        ret = true;
+    }
+
+    return ret; 
+}
+
+/**
+ * @brief: 插入数据
+ *
+ * @tparam DATA
+ * @param position
+ * @param data
+ *
+ * @return 
+ */
+template <class DATA>
+bool SimpleLink<DATA>::InsertLink(int position, const DATA data)
+{
+    //TODO
+    return true;
+}
+
+/**
+ * @brief: 反转链表 
+ *
+ * @tparam DATA
+ *
+ * @return 
+ */
+template <class DATA>
+bool SimpleLink<DATA>::ReverseLink()
+{
+
+}
+
+template <class DATA>
+SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)   // 赋值运算符重载 
+{
+    // TODO
+}
 
 /**
  * @brief: 复制构造函数
@@ -254,5 +341,5 @@ SimpleLink<DATA>&operator=(const SimpleLink<DATA> &copy);   // 赋值运算符�
 template <class DATA>
 SimpleLink<DATA>::SimpleLink(const SimpleLink<DATA> &copy)
 {
-
+    // TODO
 }

@@ -35,6 +35,7 @@ class SimpleLink
         bool IsEmpty() const;
         void Clear();
         void PrintLink();
+        void Traverse(void (*Visit)(DATA &));
         void GetLink(DATA * datas);
         void AddElem(const DATA data);
         bool DeleteLink(int position);
@@ -42,7 +43,7 @@ class SimpleLink
         bool ReverseLink();
         DATA GetELem(int position);
         bool SetELem(int position, const DATA data);
-        DATA GetPosition(const DATA data);
+        int GetPosition(const DATA data);
 };
 
 #endif
