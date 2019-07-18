@@ -116,6 +116,7 @@ void SimpleLink<DATA>::Init()
 template <class DATA>
 SimpleLink<DATA>::SimpleLink()
 {
+    cout << "data create!";
     Init();
 }
 
@@ -127,6 +128,7 @@ SimpleLink<DATA>::SimpleLink()
 template <class DATA>
 SimpleLink<DATA>::~SimpleLink()
 {
+    cout << "data delete!";
     Clear();
     delete head;
 }
@@ -196,6 +198,7 @@ void SimpleLink<DATA>::PrintLink()
         tmpPtr = tmpPtr->next;
         cout << tmpPtr->data << " ";
     }
+    cout << endl;
 }
 
 /**
@@ -340,16 +343,28 @@ bool SimpleLink<DATA>::DeleteLink(int position)
  * @brief: 插入数据
  *
  * @tparam DATA
- * @param position
- * @param data
+ * @param position 插入的位置
+ * @param data 插入的数据
  *
  * @return
  */
 template <class DATA>
 bool SimpleLink<DATA>::InsertLink(int position, const DATA data)
 {
-    //TODO
-    return true;
+    bool ret = false;
+    Node<DATA>* pre = GetElemPtr(position-1);
+    Node<DATA>* next = pre->next;
+
+    if(position <= Length() && position > 0)
+    {
+        Node<DATA> * newPtr = NULL;
+
+        newPtr = new Node<DATA> (data, next);
+        pre->next = newPtr;
+        ret = true;
+    }
+
+    return ret;
 }
 
 /**
@@ -362,13 +377,41 @@ bool SimpleLink<DATA>::InsertLink(int position, const DATA data)
 template <class DATA>
 bool SimpleLink<DATA>::ReverseLink()
 {
+    bool ret = false;
+    Node<DATA>* tmpPtr = head;
+    Node<DATA>* Head = head;
+    Node<DATA>* prePtr = head->next;
+    Node<DATA>* nextPtr = prePtr->next;
 
+    while(nextPtr != NULL)
+    {
+        prePtr->next = nextPtr->next;
+        nextPtr->next = Head->next;
+        Head->next = nextPtr;
+        nextPtr = prePtr->next;
+    }
+    if (nextPtr == NULL)
+    {
+        ret = true;
+    }
+
+    return ret;
 }
 
+/**
+ * @brief: 赋值运算符重载
+ *
+ * @tparam DATA
+ * @param copy
+ */
 template <class DATA>
-SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)   // 赋值运算符重载
+SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)
 {
-    // TODO
+    // 清掉现有的
+    Clear();
+
+    // 添加数据
+
 }
 
 /**

@@ -12,6 +12,9 @@ int main(void)
     hello(str);
     Link.AddElem(5);
     Link.AddElem(6);
+    Link.InsertLink(2, 4);
+    Link.PrintLink();
+    Link.ReverseLink();
     Link.PrintLink();
 
     return 0;
