@@ -43,7 +43,7 @@ class SimpleLink
         bool DeleteLink(int position);
         bool InsertLink(int position, const DATA data);
         bool ReverseLink();
-        DATA GetELem(int position);
+        bool GetELem(unsigned int position, DATA &elem) const;
         bool SetELem(int position, const DATA data);
         int GetPosition(const DATA data);
 };
@@ -246,14 +246,15 @@ void SimpleLink<DATA>::AddElem(const DATA data)
  * @return 返回对应的值
  */
 template <class DATA>
-DATA SimpleLink<DATA>::GetELem(int position)
+bool SimpleLink<DATA>::GetELem(unsigned int position, DATA & elem) const
 {
-    DATA ret = 0;
+    bool ret = false;
     unsigned int len = Length();
 
     if(0 < position && position <= len)
     {
-        ret = GetElemPtr(position)->data;
+        elem = GetElemPtr(position)->data;
+        ret = true;
     }
 
     return ret;
@@ -407,11 +408,18 @@ bool SimpleLink<DATA>::ReverseLink()
 template <class DATA>
 SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)
 {
+    // 添加数据
+    unsigned int len = copy.Length();
+    DATA elem;
+
     // 清掉现有的
     Clear();
 
-    // 添加数据
-
+    for(unsigned int i = 1; i <= len; i++)
+    {
+        copy.GetELem(i, elem);
+        AddElem(elem);
+    }
 }
 
 /**
@@ -423,7 +431,17 @@ SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)
 template <class DATA>
 SimpleLink<DATA>::SimpleLink(const SimpleLink<DATA> &copy)
 {
-    // TODO
+     // 添加数据
+    unsigned int len = copy.Length();
+    DATA elem;
+
+    Init();
+
+    for(unsigned int i = 1; i <= len; i++)
+    {
+        copy.GetELem(i, elem);
+        AddElem(elem);
+    }
 }
 
 #endif
