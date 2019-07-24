@@ -116,7 +116,7 @@ void SimpleLink<DATA>::Init()
 template <class DATA>
 SimpleLink<DATA>::SimpleLink()
 {
-    cout << "data create!";
+    cout << "data create!" << endl;
     Init();
 }
 
@@ -128,7 +128,7 @@ SimpleLink<DATA>::SimpleLink()
 template <class DATA>
 SimpleLink<DATA>::~SimpleLink()
 {
-    cout << "data delete!";
+    cout << "data delete!" << endl;
     Clear();
     delete head;
 }
@@ -408,18 +408,22 @@ bool SimpleLink<DATA>::ReverseLink()
 template <class DATA>
 SimpleLink<DATA>&SimpleLink<DATA>::operator=(const SimpleLink<DATA> &copy)
 {
-    // 添加数据
-    unsigned int len = copy.Length();
-    DATA elem;
-
-    // 清掉现有的
-    Clear();
-
-    for(unsigned int i = 1; i <= len; i++)
+    if(&copy != this)
     {
-        copy.GetELem(i, elem);
-        AddElem(elem);
+        // 添加数据
+        unsigned int len = copy.Length();
+        DATA elem;
+
+        // 清掉现有的
+        Clear();
+
+        for(unsigned int i = 1; i <= len; i++)
+        {
+            copy.GetELem(i, elem);
+            AddElem(elem);
+        }
     }
+    return *this;
 }
 
 /**
