@@ -1,0 +1,8 @@
+%clang
+-Wall
+-I./src/include
+-I./include
+-I./src
+%c -std=gnu11
+%cpp -std=c++17
+%cpp -stdlib=libc++

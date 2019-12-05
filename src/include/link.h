@@ -378,8 +378,10 @@ bool SimpleLink<DATA>::InsertLink(int position, const DATA data)
 template <class DATA>
 bool SimpleLink<DATA>::ReverseLink()
 {
+    if (IsEmpty()) {
+        return false;
+    }
     bool ret = false;
-    Node<DATA>* tmpPtr = head;
     Node<DATA>* Head = head;
     Node<DATA>* prePtr = head->next;
     Node<DATA>* nextPtr = prePtr->next;

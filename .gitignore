@@ -35,8 +35,12 @@
 main
 
 # cscope
+sh_general.sh
 cscope.*
 tags
+
+# ccls
+/.ccls-cache/
 
 # vscode
 /.vscode/

@@ -1,8 +1,8 @@
-#include <iostream>
-#include "./include/hello.h" 
-#include "./include/link.h" 
-
-using namespace std;
+#include "./include/public_lib.h" 
+#include <vector>
+#include "hello.h" 
+#include "link.h" 
+// #include "stack.h"
 
 int main(void)
 {
@@ -12,6 +12,7 @@ int main(void)
     int elem;
 
     hello(str);
+    Link2.ReverseLink();
     Link.AddElem(5);
     Link.AddElem(6);
     Link.InsertLink(2, 4);
